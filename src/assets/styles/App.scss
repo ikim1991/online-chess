@@ -1,0 +1,28 @@
+@import 'config.scss';
+
+body{
+    background-color: $dark;
+    text-align: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.App{
+    color: $light;
+
+    h1{
+        font-family: $header-font;
+    }
+    p{
+        font-size: 1.25em;
+        font-family: $body-font;
+    }
+}
+
+.image{
+    width: 1000px;
+}
