@@ -9,7 +9,7 @@ class Square{
     coord: number[];
 
     constructor(row: number, column: {[key: string]: number}, value: number){
-        this.name = `${row}${Object.keys(column)[0]}`;
+        this.name = `${Object.keys(column)[0]}${row}`;
         this.row = row;
         this.column = column;
         this.coord = [Object.values(column)[0], row]
@@ -18,7 +18,7 @@ class Square{
 
     createSquare(){
         return(
-            <div className={`${this.name} square`} key={this.value}>{`(${this.coord[0]}, ${this.coord[1]})`}</div>
+            <div id={`${this.name}`} className="square" key={this.value}></div>
         )
     }
 }

@@ -20,9 +20,6 @@
         div:nth-child(even){
             background-color: $secondary;
         }
-        div:hover{
-            background-color: $success;
-        }
     }
 
     .row:nth-child(odd){
@@ -35,9 +32,6 @@
         }
         div:nth-child(odd){
             background-color: $secondary;
-        }
-        div:hover{
-            background-color: $success;
         }
     }
 }

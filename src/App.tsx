@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './assets/styles/App.scss';
 import Chessboard from './components/chess/Chessboard';
 
+const chessboard = new Chessboard()
+
 const App = () => {
 
-    const chessboard = new Chessboard()
+    useEffect(() => {
+        chessboard.setupChessboard()
+    }, [])
 
     return(
-        <div className='App'>
+        <div id="main" className='App'>
             {chessboard.createChessboard()}
         </div>
     )
