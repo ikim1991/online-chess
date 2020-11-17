@@ -1,0 +1,43 @@
+#chessboard{
+    display: grid;
+    grid-template-rows: repeat(8, 100px);
+    margin-top: 50px;
+    border: solid 15px #87421f;
+
+    .row{
+        display: grid;
+        grid-template-columns: repeat(8, 100px);
+    }
+
+    .row:nth-child(even){
+
+        div{
+            cursor: pointer;
+        }
+        div:nth-child(odd){
+            background-color: $primary;
+        }
+        div:nth-child(even){
+            background-color: $secondary;
+        }
+        div:hover{
+            background-color: $success;
+        }
+    }
+
+    .row:nth-child(odd){
+
+        div{
+            cursor: pointer;
+        }
+        div:nth-child(even){
+            background-color: $primary;
+        }
+        div:nth-child(odd){
+            background-color: $secondary;
+        }
+        div:hover{
+            background-color: $success;
+        }
+    }
+}

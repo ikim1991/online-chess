@@ -1,7 +1,7 @@
 @import 'config.scss';
 
 body{
-    background-color: $dark;
+    background-color: $success;
     text-align: center;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -9,10 +9,15 @@ body{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    overflow: hidden;
 }
 
 .App{
-    color: $light;
+    
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 
     h1{
         font-family: $header-font;
@@ -23,6 +28,5 @@ body{
     }
 }
 
-.image{
-    width: 1000px;
-}
+@import 'chessboard.scss';
+
