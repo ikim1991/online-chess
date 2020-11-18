@@ -1,5 +1,5 @@
-
 export const INITIALIZE_CHESSBOARD = "INITIALIZE_CHESSBOARD";
+export const INITIALIZE_POSITIONS = "INITIALIZE_POSITIONS"
 
 export type Square = {
     position: string;
@@ -10,12 +10,19 @@ export type Square = {
 }
 
 export type Chessboard = {
-    rows: number[],
+    rows: number[];
     columns: {[key: string]: number}[];
-    squares?: Square[]
+    squares?: Square[];
 }
 
-export interface InitializeChessboard{
-    type: typeof INITIALIZE_CHESSBOARD,
+interface InitializePositions{
+    type: typeof INITIALIZE_POSITIONS;
+    payload: {[key:string]: string}
+}
+
+interface InitializeChessboard{
+    type: typeof INITIALIZE_CHESSBOARD;
     payload: Square[]
 }
+
+export type ChessboardDispatch = InitializePositions | InitializeChessboard

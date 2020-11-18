@@ -1,8 +1,9 @@
-import { Chessboard, InitializeChessboard, INITIALIZE_CHESSBOARD, Square } from "../actions/chessboardTypes";
+import { Chessboard, ChessboardDispatch, INITIALIZE_CHESSBOARD, INITIALIZE_POSITIONS, Square } from "../actions/chessboardTypes";
 
 interface DefaultStateI{
     chessboard: Chessboard;
-    squares?: Square[]
+    squares?: Square[],
+    occupied?: {[key:string]: string}
 }
 
 const defaultState: DefaultStateI = {
@@ -12,10 +13,12 @@ const defaultState: DefaultStateI = {
     }
 }
 
-export default (state: DefaultStateI = defaultState, action: InitializeChessboard): DefaultStateI => {
+export default (state: DefaultStateI = defaultState, action: ChessboardDispatch): DefaultStateI => {
     switch(action.type){
         case INITIALIZE_CHESSBOARD:
             return Object.assign({}, state, {...state, squares: action.payload})
+        case INITIALIZE_POSITIONS:
+                return Object.assign({}, state, {...state, occupied: action.payload})
         default:
             return state;
     }
