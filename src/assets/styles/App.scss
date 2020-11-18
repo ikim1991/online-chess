@@ -14,8 +14,8 @@ body{
 
 .App{
     
-    display:flex;
-    justify-content: center;
+    display: flex;
+    justify-content: flex-start;
     align-content: center;
     align-items: center;
 
@@ -28,5 +28,23 @@ body{
     }
 }
 
+.outofplay-white{
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-start;
+    width: 500px;
+    height: 400px;
+    margin: 25px;
+}
+
+.outofplay-black{
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-end;
+    width: 500px;
+    height: 400px;
+    margin: 25px;
+}
+
+
 @import 'chessboard.scss';
-@import 'chesspiece.scss';

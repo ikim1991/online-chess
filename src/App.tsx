@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
 import './assets/styles/App.scss';
-import Chessboard from './components/chess/Chessboard';
-
-const chessboard = new Chessboard()
+import OutOfPlay from './components/OutOfPlay';
+import Chessboard from './components/Chessboard';
 
 const App = () => {
 
-    useEffect(() => {
-        chessboard.setupChessboard()
-    }, [])
-
     return(
         <div id="main" className='App'>
-            {chessboard.createChessboard()}
+            <OutOfPlay player={'white'} />
+            <Chessboard />
+            <OutOfPlay player={'black'} />
         </div>
     )
 };
