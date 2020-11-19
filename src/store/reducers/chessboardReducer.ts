@@ -1,4 +1,4 @@
-import { Chessboard, ChessboardDispatch, INITIALIZE_CHESSBOARD, INITIALIZE_POSITIONS, Square } from "../actions/chessboardTypes";
+import { Chessboard, ChessboardDispatch, INITIALIZE_CHESSBOARD, RENDER_POSITIONS, Square } from "../actions/chessboardTypes";
 
 interface DefaultStateI{
     chessboard: Chessboard;
@@ -17,7 +17,7 @@ export default (state: DefaultStateI = defaultState, action: ChessboardDispatch)
     switch(action.type){
         case INITIALIZE_CHESSBOARD:
             return Object.assign({}, state, {...state, squares: action.payload})
-        case INITIALIZE_POSITIONS:
+        case RENDER_POSITIONS:
                 return Object.assign({}, state, {...state, occupied: action.payload})
         default:
             return state;

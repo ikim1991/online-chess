@@ -1,18 +1,35 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { initializeChessboard, initializePositions } from '../store/actions/chessboardActions';
+import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
 import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
-import { initializeChesspieces } from '../store/actions/chesspieceAction';
-import getChesspiece from '../assets/images/pieces/getChesspiece';
-
+import { initializeChesspieces, moveChessPiece } from '../store/actions/chesspieceAction';
+import ChessPiece from './ChessPiece';
 
 const Chessboard = () => {
 
     const dispatch = useDispatch();
     const { chessboard, squares, occupied } = useSelector((state: RootState) => state.chessboard)
     const { initializer, chesspieces } = useSelector((state: RootState) => state.chesspiece)
+
+    const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+    }
+
+    const drop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+
+        type DataJson = {
+            id: string;
+            position: string;
+            coord: [number, number];
+        }
+
+        const id = e.currentTarget.id
+        const data: DataJson = JSON.parse(e.dataTransfer.getData("data"))
+        dispatch(moveChessPiece(data.id, id))
+    }
 
     useEffect(() => {
 
@@ -55,9 +72,9 @@ const Chessboard = () => {
         if(chesspieces){
             let positions: {[key:string]: string} = {}
             chesspieces.forEach((piece) => {
-                positions[piece.position] = piece._id
+                positions[piece._id] = piece.position
             })
-            dispatch(initializePositions(positions))
+            dispatch(renderPositions(positions))
         }
     }, [chesspieces])
 
@@ -67,15 +84,22 @@ const Chessboard = () => {
                 chessboard.rows.map((r, i) => {
                 return <div className="row" key={i}>{chessboard.columns.map((col, j) => {
                     let value: number;
-                    value = (8 * i) + (j+1)
-                    if(Object.keys(occupied).includes(`${Object.keys(col)[0]}${r}`)){
+                    let position = `${Object.keys(col)[0]}${r}`;
+                    value = (8 * i) + (j+1);
+                    
+                    let ids = Object.keys(occupied)
+                    let positions = Object.values(occupied)
+                    let index = positions.indexOf(position)
+                    if(index !== -1){
                         return (
-                            <div id={`${Object.keys(col)[0]}${r}`} className="square" key={value}>
-                                <img id={occupied[`${Object.keys(col)[0]}${r}`]} className="piece" src={getChesspiece(occupied[`${Object.keys(col)[0]}${r}`])} alt="chesspiece"/>
+                            <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
+                                <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
                             </div>
-                        )}
-                    return (<div id={`${Object.keys(col)[0]}${r}`} className="square" key={value}></div>)
-                })}</div>
+                        )} else{
+                            return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
+                        }
+                    }        
+                )}</div>
             }))}
         </div>
     )

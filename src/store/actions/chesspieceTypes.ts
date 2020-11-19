@@ -1,4 +1,5 @@
 export const INITIALIZE_CHESSPIECES = "INITIALIZE_CHESSPIECES"
+export const MOVE_CHESSPIECE = "MOVE_CHESSPIECE"
 
 export type Color = 'WHITE' | 'BLACK';
 export type Rank = 'PAWN' | 'ROOK' | 'KNIGHT' | 'BISHOP' | 'QUEEN' | 'KING'
@@ -17,4 +18,9 @@ interface InitializeChesspieces{
     payload: Chesspiece[]
 }
 
-export type ChesspieceDispatch = InitializeChesspieces
+interface MoveChessPiece{
+    type: typeof MOVE_CHESSPIECE,
+    payload: [string, string]
+}
+
+export type ChesspieceDispatch = InitializeChesspieces | MoveChessPiece
