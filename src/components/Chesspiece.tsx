@@ -13,7 +13,7 @@ const ChessPiece = ({id, position, coord}: ChessPieceProps) => {
         const data = {id, position, coord}
         e.dataTransfer.setData("data", JSON.stringify(data))
     }
-    
+
     return(
         <img id={id} className='piece' src={getChesspiece(id)} alt='chesspiece' onDragStart={drag}/>
     )

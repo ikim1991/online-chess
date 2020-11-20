@@ -9,8 +9,9 @@ export type Chesspiece = {
     rank: string;
     color: Color;
     position: string;
-    coord: [number, number];
+    coord: number[];
     hasBeenMoved: boolean;
+    inPlay: boolean;
 }
 
 interface InitializeChesspieces{

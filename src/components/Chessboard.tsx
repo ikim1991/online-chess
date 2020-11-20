@@ -6,6 +6,7 @@ import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
 import { initializeChesspieces, moveChessPiece } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
+import { allowedSquares } from './src/chessLogic';
 
 const Chessboard = () => {
 
@@ -28,6 +29,11 @@ const Chessboard = () => {
 
         const id = e.currentTarget.id
         const data: DataJson = JSON.parse(e.dataTransfer.getData("data"))
+
+        let sq = squares!.filter((square, i) => square.position === id)[0]
+        let p = chesspieces!.filter((piece, i) => piece._id === data.id)[0]
+        let occ = Object.entries(occupied!)
+        console.log(allowedSquares(p,sq, occ, id))
         dispatch(moveChessPiece(data.id, id))
     }
 
@@ -60,7 +66,8 @@ const Chessboard = () => {
                         color: piece.color,
                         position: piece.position[j],
                         coord: piece.coords[j],
-                        hasBeenMoved: false
+                        hasBeenMoved: false,
+                        inPlay: true
                     })
                 })
             })
