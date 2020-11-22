@@ -4,7 +4,7 @@ import { RootState } from '../store/store';
 import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
 import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
-import { initializeChesspieces, moveChessPiece } from '../store/actions/chesspieceAction';
+import { initializeChesspieces, moveChessPiece, updateChessPiece } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
 import { legalMove } from './src/chessLogic';
 
@@ -33,7 +33,20 @@ const Chessboard = () => {
         let sq = squares!.filter((square, i) => square.position === id)[0]
         let p = chesspieces!.filter((piece, i) => piece._id === data.id)[0]
         let occ = Object.entries(occupied!)
+
         if(legalMove(p,sq, occ)){
+            let movedPiece = chesspieces!.find(piece => piece._id === data.id)!;
+            
+            console.log(movedPiece)
+
+            if(!movedPiece.hasBeenMoved){  
+                dispatch(updateChessPiece(Object.assign({}, movedPiece, {...movedPiece, hasBeenMoved: true})))
+            }
+            if(e.currentTarget.hasChildNodes()){
+                let captured = chesspieces!.find(piece => piece.position === sq.position)!;
+                dispatch(updateChessPiece(Object.assign({}, captured, {...captured, inPlay: false, position: "a0"})))
+            }
+
             dispatch(moveChessPiece(data.id, id))
         }
     }
@@ -99,11 +112,16 @@ const Chessboard = () => {
                     let positions = Object.values(occupied)
                     let index = positions.indexOf(position)
                     if(index !== -1){
-                        return (
-                            <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
-                                <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
-                            </div>
-                        )} else{
+                        if(chesspieces.find(piece => piece.position === position)?.inPlay){
+                            return (
+                                <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
+                                    <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
+                                </div>
+                            )
+                        } else{
+                            return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
+                        }
+                        } else{
                             return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
                         }
                     }        

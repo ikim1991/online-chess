@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import chessboardReducer from './chessboardReducer';
-import chesspieceReducer from './chesspiece.reducer';
+import chesspieceReducer from './chesspieceReducer';
 
 const RootReducer = combineReducers({
     chessboard: chessboardReducer,
