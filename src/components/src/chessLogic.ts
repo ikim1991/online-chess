@@ -1,6 +1,7 @@
 import { Square } from "../../store/actions/chessboardTypes";
 import { Chesspiece } from "../../store/actions/chesspieceTypes";
 import moveBishop from "./moveBishop";
+import moveKing from "./moveKing";
 import moveKnight from "./moveKnight";
 import movePawn from './movePawn';
 import moveRook from './moveRook';
@@ -28,7 +29,7 @@ export const cartesianDistance = (coords: number[], x: number, y:number) => {
     return [coords[0] + x, coords[1] + y]
 }
 
-export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [string, string][]) => {
+export const legalMove = (piece: Chesspiece, square: Square, occupied: [string, string][]) => {
     switch(piece.rank){
         case "PAWN":
             return movePawn(piece, square, occupied);
@@ -41,7 +42,7 @@ export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [str
         case "QUEEN":
             return (moveRook(piece, square, occupied) || moveBishop(piece, square, occupied));
         case "KING":
-            return false;
+            return moveKing(piece, square, occupied);
         default:
             return false;
     }

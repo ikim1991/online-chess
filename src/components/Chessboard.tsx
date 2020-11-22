@@ -6,7 +6,7 @@ import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
 import { initializeChesspieces, moveChessPiece } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
-import { allowedSquares } from './src/chessLogic';
+import { legalMove } from './src/chessLogic';
 
 const Chessboard = () => {
 
@@ -33,8 +33,9 @@ const Chessboard = () => {
         let sq = squares!.filter((square, i) => square.position === id)[0]
         let p = chesspieces!.filter((piece, i) => piece._id === data.id)[0]
         let occ = Object.entries(occupied!)
-        console.log(allowedSquares(p,sq, occ))
-        dispatch(moveChessPiece(data.id, id))
+        if(legalMove(p,sq, occ)){
+            dispatch(moveChessPiece(data.id, id))
+        }
     }
 
     useEffect(() => {

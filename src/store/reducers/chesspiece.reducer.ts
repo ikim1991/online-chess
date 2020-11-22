@@ -22,7 +22,7 @@ const defaultState: DefaultStateI = {
         {color:'WHITE', rank: 'QUEEN',position:['d1'], coords: [[4,1]], _ids: ['wq']},
         {color: 'BLACK', rank: 'QUEEN', position:['d8'], coords: [[4,8]], _ids: ['bq']},
         {color: 'WHITE', rank: 'BISHOP', position:['c1','f1'], coords: [[3,1],[6,1]], _ids: ['wb1', 'wb2']},
-        {color: 'BLACK', rank: 'BISHOP', position:['c8','f8'], coords: [[6,8],[3,8]], _ids: ['bb1', 'bb2']},
+        {color: 'BLACK', rank: 'BISHOP', position:['c8','f8'], coords: [[3,8],[6,8]], _ids: ['bb1', 'bb2']},
         {color:'WHITE', rank: 'KNIGHT', position:['b1','g1'], coords:[[2,1],[7,1]], _ids: ['wk1', 'wk2']},
         {color: 'BLACK',rank: 'KNIGHT',position:['b8','g8'], coords:[[2,8],[7,8]], _ids: ['bk1', 'bk2']},
         {color:'WHITE',rank: 'ROOK',position:['a1','h1'], coords:[[1,1],[8,1]], _ids: ['wr1', 'wr2']},
