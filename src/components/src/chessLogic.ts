@@ -28,10 +28,10 @@ export const cartesianDistance = (coords: number[], x: number, y:number) => {
     return [coords[0] + x, coords[1] + y]
 }
 
-export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [string, string][], id: string) => {
+export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [string, string][]) => {
     switch(piece.rank){
         case "PAWN":
-            return movePawn(piece, square, occupied).includes(id);
+            return movePawn(piece, square, occupied);
         case "ROOK":
             return moveRook(piece, square, occupied);
         case "KNIGHT":

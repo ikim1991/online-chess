@@ -54,6 +54,6 @@ export default (piece: Chesspiece, square: Square, occupied: [string, string][])
                 allowed.push(pos)
             }
         })
-        return allowed;
+        return allowed.includes(square.position)
     }
 }

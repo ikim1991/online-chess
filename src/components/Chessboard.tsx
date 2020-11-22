@@ -33,7 +33,7 @@ const Chessboard = () => {
         let sq = squares!.filter((square, i) => square.position === id)[0]
         let p = chesspieces!.filter((piece, i) => piece._id === data.id)[0]
         let occ = Object.entries(occupied!)
-        console.log(allowedSquares(p,sq, occ, id))
+        console.log(allowedSquares(p,sq, occ))
         dispatch(moveChessPiece(data.id, id))
     }
 
