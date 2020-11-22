@@ -1,5 +1,6 @@
 import { Square } from "../../store/actions/chessboardTypes";
 import { Chesspiece } from "../../store/actions/chesspieceTypes";
+import moveBishop from "./moveBishop";
 import moveKnight from "./moveKnight";
 import movePawn from './movePawn';
 import moveRook from './moveRook';
@@ -36,11 +37,11 @@ export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [str
         case "KNIGHT":
             return moveKnight(piece, square, occupied);
         case "BISHOP":
-            return [];
+            return moveBishop(piece, square, occupied);
         case "QUEEN":
-            return [];
+            return false;
         case "KING":
-            return [];
+            return false;
         default:
             return false;
     }

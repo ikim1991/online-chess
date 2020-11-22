@@ -1,6 +1,5 @@
 import { Square } from "../../store/actions/chessboardTypes";
 import { Chesspiece } from "../../store/actions/chesspieceTypes";
-import { mapCoordinates, cartesianDistance } from './chessLogic';
 
 export default (piece: Chesspiece, square: Square, occupied: [string, string][]) => {
 
