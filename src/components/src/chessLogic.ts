@@ -39,7 +39,7 @@ export const allowedSquares = (piece: Chesspiece, square: Square, occupied: [str
         case "BISHOP":
             return moveBishop(piece, square, occupied);
         case "QUEEN":
-            return false;
+            return (moveRook(piece, square, occupied) || moveBishop(piece, square, occupied));
         case "KING":
             return false;
         default:
