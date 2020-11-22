@@ -3,57 +3,56 @@ import { Chesspiece } from "../../store/actions/chesspieceTypes";
 import { mapCoordinates, cartesianDistance } from './chessLogic';
 
 export default (piece: Chesspiece, square: Square, occupied: [string, string][]) => {
-    let allowed: (string | null)[] = []
-    let cartesian: number[] = []
-    const occupiedWhite = occupied.filter(piece => piece[0][0] === 'w');
-    const occupiedBlack = occupied.filter(piece => piece[0][0] === 'b');
-    if(piece.color === 'WHITE'){
-        // Can move 2 spaces if first move
-        if(!piece.hasBeenMoved){
-            cartesian = cartesianDistance(piece.coord, 0, 2)
-            if(cartesian[0] > 0){
-                allowed.push(mapCoordinates(cartesian))
-            }
-        }
 
-        // Otherwise move 1 space
-        cartesian = cartesianDistance(piece.coord, 0, 1)
-        if(cartesian[0] > 0){
-            allowed.push(mapCoordinates(cartesian))
+    const occupiedSquares = occupied.map(p => p[1]);
+    const occupiedWhite = occupied.filter(piece => piece[0][0] === 'w').map(p => p[1]);
+    const occupiedBlack = occupied.filter(piece => piece[0][0] === 'b').map(p => p[1]);
+
+    let move = [square.coord[0] - piece.coord[0], square.coord[1] - piece.coord[1]]
+    let magnitude = Math.abs(move[1])
+    let direction = move[1] / Math.abs(move[1])
+
+    if(move[0] > magnitude){
+        return false;
+    }
+
+    if(piece.color === "WHITE"){
+        let upOne = mapCoordinates([piece.coord[0], piece.coord[1] + 1])
+        let upTwo = mapCoordinates([piece.coord[0], piece.coord[1] + 2])
+        let diagonalRight = mapCoordinates([piece.coord[0] + 1, piece.coord[1] + 1])
+        let diagonalLeft = mapCoordinates([piece.coord[0] - 1, piece.coord[1] + 1])
+        if(!occupiedSquares.includes(upOne) && square.position === upOne){
+            return true;
+        } else if(
+            (!occupiedSquares.includes(upOne) && !occupiedSquares.includes(upTwo)) && 
+            (square.position === upTwo && !piece.hasBeenMoved)
+            ){
+            return true;
+        } else if(diagonalRight === square.position && occupiedBlack.includes(square.position)){
+            return true
+        } else if(diagonalLeft === square.position && occupiedBlack.includes(square.position)){
+            return true;
+        } else{
+            return false;
         }
-        
-        // Check for diagonals
-        let diagonals = [[1,1], [-1,1]];
-        diagonals.forEach(i => {
-            let pos = mapCoordinates([piece.coord[0] + i[0], piece.coord[1] + i[1]])
-            if(occupiedBlack.filter((item) => item[1] === pos).length > 0){
-                allowed.push(pos)
-            }
-        })
-        return allowed;
     } else{
-        // Can move 2 spaces if first move
-        if(!piece.hasBeenMoved){
-            cartesian = cartesianDistance(piece.coord, 0, -2)
-            if(cartesian[0] > 0){
-                allowed.push(mapCoordinates(cartesian))
-            }
+        let upOne = mapCoordinates([piece.coord[0], piece.coord[1] - 1])
+        let upTwo = mapCoordinates([piece.coord[0], piece.coord[1] - 2])
+        let diagonalRight = mapCoordinates([piece.coord[0] + 1, piece.coord[1] - 1])
+        let diagonalLeft = mapCoordinates([piece.coord[0] - 1, piece.coord[1] - 1])
+        if(!occupiedSquares.includes(upOne) && square.position === upOne){
+            return true;
+        } else if(
+            (!occupiedSquares.includes(upOne) && !occupiedSquares.includes(upTwo)) && 
+            (square.position === upTwo && !piece.hasBeenMoved)
+            ){
+            return true;
+        } else if(diagonalRight === square.position && occupiedWhite.includes(square.position)){
+            return true
+        } else if(diagonalLeft === square.position && occupiedWhite.includes(square.position)){
+            return true;
+        } else{
+            return false;
         }
-
-        // Otherwise move 1 space
-        cartesian = cartesianDistance(piece.coord, 0, -1)
-        if(cartesian[0] > 0){
-            allowed.push(mapCoordinates(cartesian))
-        }
-        
-        // Check for diagonals
-        let diagonals = [[-1,-1], [1,-1]];
-        diagonals.forEach(i => {
-            let pos = mapCoordinates([piece.coord[0] + i[0], piece.coord[1] + i[1]])
-            if(occupiedWhite.filter((item) => item[1] === pos).length > 0){
-                allowed.push(pos)
-            }
-        })
-        return allowed.includes(square.position)
     }
 }
