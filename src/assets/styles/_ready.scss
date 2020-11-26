@@ -1,0 +1,23 @@
+.ready{
+    font-family: $header-font;
+    color: $light;
+    border: 2px solid $light;
+    margin: auto;
+    padding: 5rem;
+    border-radius: 1rem;
+
+    h2{
+        font-size: 3rem;
+        margin: 2rem auto;
+    }
+
+    i{
+        font-size: 10rem;
+        cursor: pointer;
+        margin: 2rem 1.5rem;
+        padding: 1rem;
+    }
+    i:hover{
+        background-color: $secondary;
+    }
+}

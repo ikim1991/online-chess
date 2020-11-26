@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
@@ -7,6 +7,7 @@ import { Chesspiece } from '../store/actions/chesspieceTypes';
 import { initializeChesspieces, moveChessPiece, updateChessPiece } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
 import { legalMove } from './src/chessLogic';
+import OutOfPlay from './OutOfPlay';
 
 const Chessboard = () => {
 
@@ -101,34 +102,39 @@ const Chessboard = () => {
     }, [chesspieces])
 
     return(
-        <div id="chessboard">
-            {(squares && chesspieces && occupied) && (
-                chessboard.rows.map((r, i) => {
-                return <div className="row" key={i}>{chessboard.columns.map((col, j) => {
-                    let value: number;
-                    let position = `${Object.keys(col)[0]}${r}`;
-                    value = (8 * i) + (j+1);
-                    
-                    let ids = Object.keys(occupied)
-                    let positions = Object.values(occupied)
-                    let index = positions.indexOf(position)
-                    if(index !== -1){
-                        if(chesspieces.find(piece => piece.position === position)?.inPlay){
-                            return (
-                                <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
-                                    <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
-                                </div>
-                            )
-                        } else{
-                            return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
-                        }
-                        } else{
-                            return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
-                        }
-                    }        
-                )}</div>
-            }))}
-        </div>
+        <Fragment>
+            <OutOfPlay player="WHITE"/>
+            <div id="chessboard">
+                {(squares && chesspieces && occupied) && (
+                    chessboard.rows.map((r, i) => {
+                    return <div className="row" key={i}>{chessboard.columns.map((col, j) => {
+                        let value: number;
+                        let position = `${Object.keys(col)[0]}${r}`;
+                        value = (8 * i) + (j+1);
+                        
+                        let ids = Object.keys(occupied)
+                        let positions = Object.values(occupied)
+                        let index = positions.indexOf(position)
+                        if(index !== -1){
+                            if(chesspieces.find(piece => piece.position === position)?.inPlay){
+                                return (
+                                    <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
+                                        <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
+                                    </div>
+                                )
+                            } else{
+                                return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
+                            }
+                            } else{
+                                return (<div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}></div>)
+                            }
+                        }        
+                    )}</div>
+                }))}
+            </div>
+            <OutOfPlay player="BLACK"/>
+        </Fragment>
+        
     )
 }
 

@@ -5,7 +5,7 @@ interface DefaultStateI{
 }
 
 const defaultState: DefaultStateI = {
-    gameState: 'QUEUE'
+    gameState: 'PLAY'
 };
 
 export default (state: DefaultStateI = defaultState, action: GameStateDispatch) => {

@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
-import './assets/styles/App.scss';
-import OutOfPlay from './components/OutOfPlay';
-import Chessboard from './components/Chessboard';
-import Queue from './components/Queue';
-import Start from './components/Start';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store/store';
+import Chessboard from './components/Chessboard';
+import Queue from './components/Queue';
+import Home from './components/Home';
+import Ready from './components/Ready';
+import './assets/styles/App.scss';
+
+
 
 const App = () => {
 
@@ -15,9 +17,18 @@ const App = () => {
 
     return(
         <div id="main" className='App'>
-            <OutOfPlay player="WHITE"/>
-            <Chessboard/>
-            <OutOfPlay player="BLACK"/>
+            {(gameState === 'HOME') && (
+                <Home/>
+            )}
+            {(gameState === 'QUEUE') && (
+                <Queue/>
+            )}
+            {(gameState === 'READY') && (
+                <Ready/>
+            )}
+            {(gameState === 'PLAY') && (
+                <Chessboard/>
+            )}
         </div>
     )
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import One from '../assets/images/pieces/king.white.png';
 import Two from '../assets/images/pieces/king.black.png';
 
-const Start = () => {
+const Home = () => {
     return(
         <div className="start">
             <img src={One}/>
@@ -13,4 +13,4 @@ const Start = () => {
     )
 }
 
-export default Start;
+export default Home;
