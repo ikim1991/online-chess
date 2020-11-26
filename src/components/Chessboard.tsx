@@ -13,6 +13,7 @@ const Chessboard = () => {
     const dispatch = useDispatch();
     const { chessboard, squares, occupied } = useSelector((state: RootState) => state.chessboard)
     const { initializer, chesspieces } = useSelector((state: RootState) => state.chesspiece)
+    const { player } = useSelector((state: RootState) => state.player);
 
     const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()

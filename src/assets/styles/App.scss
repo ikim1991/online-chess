@@ -1,5 +1,11 @@
 @import 'config.scss';
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     background-color: $success;
     text-align: center;
@@ -18,6 +24,8 @@ body{
     justify-content: flex-start;
     align-content: center;
     align-items: center;
+    width: 100%;
+    height: 100vh;
 
     h1{
         font-family: $header-font;
@@ -28,7 +36,7 @@ body{
     }
 }
 
-.outofplay-white{
+.outofplay-WHITE{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -38,7 +46,7 @@ body{
     margin: 25px;
 }
 
-.outofplay-black{
+.outofplay-BLACK{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -49,5 +57,7 @@ body{
 }
 
 
+@import 'start.scss';
+@import 'queue.scss';
 @import 'chessboard.scss';
 @import 'chesspiece.scss';

@@ -1,0 +1,47 @@
+.queue{
+    font-family: $header-font;
+    color: $light;
+    border: 2px solid $light;
+    margin: auto;
+    padding: 5rem;
+    border-radius: 1rem;
+
+    h2{
+        font-size: 2em;
+        -webkit-touch-callout: all;
+        -webkit-user-select: all;
+        -khtml-user-select: all;
+        -moz-user-select: all;
+        -ms-user-select: all;
+        user-select: all;
+    }
+
+    .user{
+        font-size: 1.5em;
+        font-weight: bold;
+
+        label{
+            display: block;
+            margin: 1rem auto;
+        }
+        input{
+            display: block;
+            text-align: center;
+            margin: 1rem auto;
+            font-size: 1.2rem;
+        }
+        #ready{
+            color: $light;
+            font-size: 1.3rem;
+            padding: 1rem 1.4rem;
+            background-color: $danger;
+            cursor: pointer;
+        }
+        #ready:hover{
+            background-color: $success;
+        }
+        #status{
+            margin: 1rem auto;
+        }
+    }
+}
