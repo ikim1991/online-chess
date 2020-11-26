@@ -9,6 +9,10 @@ export default (piece: Chesspiece, square: Square, occupied: [string, string][])
     const occupiedBlack = occupied.filter(piece => piece[0][0] === 'b').map(p => p[1]);
 
     let move = [square.coord[0] - piece.coord[0], square.coord[1] - piece.coord[1]]
+
+    if(move[0] === 0 && move[1] === 0){
+        return false;
+    }
     
     if(Math.abs(move[0]) !== Math.abs(move[1])){
         return false;
