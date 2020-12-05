@@ -5,6 +5,7 @@ import Chessboard from './components/Chessboard';
 import Queue from './components/Queue';
 import Home from './components/Home';
 import Ready from './components/Ready';
+import Join from './components/Join';
 import './assets/styles/App.scss';
 
 
@@ -20,7 +21,10 @@ const App = () => {
             {(gameState === 'HOME') && (
                 <Home/>
             )}
-            {(gameState === 'QUEUE') && (
+            {(gameState === 'JOIN') && (
+                <Join/>
+            )}
+            {(gameState === 'QUEUE' && sessionStorage.serverCode) && (
                 <Queue/>
             )}
             {(gameState === 'READY') && (

@@ -58,7 +58,12 @@ body{
 
 
 @import 'start.scss';
+@import 'join.scss';
 @import 'queue.scss';
 @import 'ready.scss';
 @import 'chessboard.scss';
 @import 'chesspiece.scss';
+
+::-webkit-scrollbar {
+    display: none;
+}
