@@ -1,30 +1,45 @@
-import { GameState, GameStateDispatch, INITIALIZE_GAMESTATE, GENERATE_SERVER_CODE, INITIALIZE_USERNAME, SHOW_AVAILABLE_GAMES, CHANGE_PLAYER_STATUS } from "../actions/gameStateTypes";
+import { Color } from "../actions/chesspieceTypes";
+import { CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT } from "../actions/gameStateTypes";
 
 interface DefaultStateI{
     gameState: GameState,
-    serverCode?: string,
-    username?: string,
+    identifier?: string,
     gameList?: string[],
-    ready: boolean
+    pending: boolean,
+    error?: string,
+    host?: {
+        username: string,
+        ready: boolean,
+        color: Color
+    },
+    joiner?:{
+        username: string,
+        ready: boolean,
+        color: Color
+    }
 }
 
 const defaultState: DefaultStateI = {
     gameState: 'HOME',
-    ready: false
+    pending: false
 };
 
 export default (state: DefaultStateI = defaultState, action: GameStateDispatch) => {
     switch(action.type){
-        case INITIALIZE_GAMESTATE:
-            return Object.assign({}, state, {...state, gameState: action.payload});
-        case GENERATE_SERVER_CODE:
-            return Object.assign({}, state, {...state, serverCode: action.payload});
-        case INITIALIZE_USERNAME:
-            return Object.assign({}, state, {...state, username: action.payload});
-        case SHOW_AVAILABLE_GAMES:
-            return Object.assign({}, state, {...state, gameList: action.payload});
-        case CHANGE_PLAYER_STATUS:
-            return Object.assign({}, state, {...state, ready: action.payload})
+        case GET_PENDING:
+            return Object.assign({}, state, {...state, pending: true});
+        case GET_ERROR:
+            return Object.assign({}, state, {...state, pending: false, error: action.payload});
+        case CREATE_GAME:
+            return Object.assign({}, state, {...state, ...action.payload, pending: false});
+        case JOIN_GAME:
+            return Object.assign({}, state, {...state, ...action.payload, pending: false});
+        case SHOW_GAMELIST:
+            return Object.assign({}, state, {...state, pending: false, gameState: "JOIN", gameList: action.payload});
+        case START_GAME:
+            return Object.assign({}, state, {...state, ...action.payload});
+        case TO_DEFAULT:
+            return Object.assign({}, state, defaultState);
         default:
             return state;
     }

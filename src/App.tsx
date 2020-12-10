@@ -8,13 +8,10 @@ import Ready from './components/Ready';
 import Join from './components/Join';
 import './assets/styles/App.scss';
 
-
-
 const App = () => {
 
     const dispatch = useDispatch();
-    const { player } = useSelector((state: RootState) => state.player);
-    const { gameState } = useSelector((state: RootState) => state.game);
+    const { gameState, identifier } = useSelector((state: RootState) => state.game);
 
     return(
         <div id="main" className='App'>
@@ -24,7 +21,7 @@ const App = () => {
             {(gameState === 'JOIN') && (
                 <Join/>
             )}
-            {(gameState === 'QUEUE' && sessionStorage.serverCode) && (
+            {(gameState === 'QUEUE' && identifier) && (
                 <Queue/>
             )}
             {(gameState === 'READY') && (

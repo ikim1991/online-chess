@@ -1,34 +1,82 @@
-export const INITIALIZE_GAMESTATE = 'INITIALIZE_GAMESTATE';
-export const GENERATE_SERVER_CODE = 'GENERATE_SERVER_CODE';
-export const INITIALIZE_USERNAME = 'INITIALIZE_USERNAME';
-export const SHOW_AVAILABLE_GAMES = 'SHOW_AVAILABLE_GAMES'
-export const CHANGE_PLAYER_STATUS = 'CHANGE_PLAYER_STATUS';
+import { Color } from "./chesspieceTypes";
+
+export const GET_PENDING = 'GET_PENDING';
+export const GET_ERROR = 'GET_ERROR';
+export const CREATE_GAME = 'CREATE_GAME';
+export const SHOW_GAMELIST = 'SHOW_GAMELIST';
+export const JOIN_GAME = 'JOIN_GAME';
+export const START_GAME = 'START_GAME';
+export const TO_DEFAULT = 'TO_DEFAULT';
 
 export type GameState = 'HOME' | 'JOIN' |'QUEUE' | 'READY' | 'PLAY';
 
-export interface InitializeGameState{
-    type: typeof INITIALIZE_GAMESTATE,
-    payload: GameState
+interface GetPending{
+    type: typeof GET_PENDING
+}
+interface GetError{
+    type: typeof GET_ERROR,
+    payload: string
+}
+interface CreateGame{
+    type: typeof CREATE_GAME,
+    payload: {
+        identifier: string,
+        host?: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        joiner?: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        gameState: GameState
+    }
+}
+interface ShowGameList{
+    type: typeof SHOW_GAMELIST,
+    payload: {
+        gameList: string[],
+        gameState: GameState
+    }
+}
+interface ToDefault{
+    type: typeof TO_DEFAULT
+}
+interface JoinGame{
+    type: typeof JOIN_GAME,
+    payload: {
+        identifier: string,
+        host?: {
+            username: string,
+            ready: string,
+            color?: Color
+        },
+        joiner?: {
+            username: string,
+            ready: string,
+            color?: Color
+        },
+        gameState: GameState
+    }
+}
+interface StartGame{
+    type: typeof START_GAME,
+    payload: {
+        identifier: string,
+        host: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        joiner: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        gameState: GameState
+    }
 }
 
-export interface GenerateServerCode{
-    type: typeof GENERATE_SERVER_CODE;
-    payload: string;
-}
-
-export interface InitializeUsername{
-    type: typeof INITIALIZE_USERNAME;
-    payload: string;
-}
-
-export interface ShowAvailableGames{
-    type: typeof SHOW_AVAILABLE_GAMES;
-    payload: string[];
-}
-
-export interface ChangePlayerStatus{
-    type: typeof CHANGE_PLAYER_STATUS;
-    payload: boolean;
-}
-
-export type GameStateDispatch = InitializeGameState | GenerateServerCode | InitializeUsername | ShowAvailableGames | ChangePlayerStatus;
+export type GameStateDispatch = GetPending | GetError | CreateGame | ShowGameList | ToDefault | JoinGame | StartGame;

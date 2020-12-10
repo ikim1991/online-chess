@@ -1,16 +1,18 @@
 import React from 'react';
 import One from '../assets/images/pieces/king.white.png';
 import Two from '../assets/images/pieces/king.black.png';
-import { generateLink } from './src/generateLink';
+import { generateIdentifier } from './src/generateIdentifier';
 import { useDispatch } from 'react-redux';
-import { generateServerCode, initializeGameState, initializeUsername } from '../store/actions/gameStateActions';
+import { createGame, toJoinPage } from '../store/actions/gameStateActions';
+import { socket } from '../ClientSocket';
+import { initializePlayer } from '../store/actions/playerActions';
 
 const Home = () => {
 
     const dispatch = useDispatch();
 
     const createRoom = (e: React.MouseEvent) => {
-        const serverCode = generateLink();
+        const identifier = generateIdentifier();
 
         let username = prompt('Enter your username...');
 
@@ -23,14 +25,12 @@ const Home = () => {
         }
 
         if(username){
-            dispatch(initializeUsername(username));
-            dispatch(generateServerCode(serverCode));
-            sessionStorage.setItem('serverCode', serverCode);
-            dispatch(initializeGameState('QUEUE'))
+            dispatch(initializePlayer({username, ready: false}))
+            dispatch(createGame(identifier, username));
         }
     }
 
-    const joinRoom = (e: React.MouseEvent) => {
+    const joinPage = (e: React.MouseEvent) => {
         let username = prompt('Enter your username...');
 
         while(username === ''){
@@ -42,8 +42,8 @@ const Home = () => {
         }
 
         if(username){
-            dispatch(initializeUsername(username));
-            dispatch(initializeGameState('JOIN'));
+            dispatch(initializePlayer({username, ready: false}))
+            dispatch(toJoinPage(username))
         }
     }
 
@@ -56,7 +56,7 @@ const Home = () => {
                 <button onClick={createRoom}>Create a Room</button>
             </div>
             <div>
-                <button onClick={joinRoom}>Join a Room</button>
+                <button onClick={joinPage}>Join a Room</button>
             </div>
         </div>
     )

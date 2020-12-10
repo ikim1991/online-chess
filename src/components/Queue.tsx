@@ -1,47 +1,69 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePlayerStatus, initializeGameState, initializeUsername } from '../store/actions/gameStateActions';
+import { socket } from '../ClientSocket';
+import { backToHomePage, startGame } from '../store/actions/gameStateActions';
+import { changePlayerStatus, toPlayerDefault } from '../store/actions/playerActions';
 import { RootState } from '../store/store';
 
 const Queue = () => {
 
-    const { serverCode, username, ready } = useSelector((state: RootState) => state.game);
+    const { identifier, host, joiner } = useSelector((state: RootState) => state.game);
+    const { player } = useSelector((state: RootState) => state.player);
     const dispatch = useDispatch()
 
-    const onReady = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.disabled = true;
+    useEffect(() => {
+        socket.emit("joinRoom", identifier);
 
-        if(ready){
-            dispatch(changePlayerStatus(false))
+        socket.on("updateHostPage", (game: any) => {
+            dispatch(startGame(game));
+        })
+
+        socket.on("updateReady", (game: any, username: string) => {
+            dispatch(startGame(game));
+        })
+
+        return(() => {
+            socket.emit("leaveRoom", identifier, player!.username);
+        })
+    }, [identifier])
+
+    const onReady = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+        e.currentTarget.disabled = true;
+        
+        if(player!.username === host!.username){
+            socket.emit("onReady", identifier, 'host', host)
         } else{
-            dispatch(changePlayerStatus(true))
+            socket.emit("onReady", identifier, 'joiner', joiner)
         }
+
+        dispatch(changePlayerStatus());
 
         e.currentTarget.disabled = false;
     }
 
     const backToHome = (e: React.MouseEvent<HTMLButtonElement>) => {
-        dispatch(initializeGameState('HOME'))
-        dispatch(initializeUsername(''))
-        dispatch(changePlayerStatus(false))
+        dispatch(backToHomePage());
+        dispatch(toPlayerDefault());
+        sessionStorage.removeItem('identifier');
     }
 
     return(
         <div className="queue">
             <div className="server-link">
                 <div className="to-home"><button className="back-home" onClick={backToHome}><i className="fa fa-home"> Back to Home</i></button></div>
-                <h2>{serverCode}</h2>
+                <h2>{identifier}</h2>
                 <div className="user">
-                    <label htmlFor="username">Username: {username}</label>
+                    <label htmlFor="username">Username: {player!.username}</label>
                     {
-                        (ready) ? (
+                        (player!.ready) ? (
                             <button id="ready" className="readied" onClick={onReady}>READY</button>
                         ) : (
                             <button id="ready" className="not-readied" onClick={onReady}>READY</button>
                         )
                     }
                     {
-                    (ready) ? ( 
+                    (player!.ready) ? ( 
                         <h3 id="status">Ready! Waiting for Opponent...</h3>
                     ) : ( 
                         <h3 id="status">Press Button when Ready...</h3>
