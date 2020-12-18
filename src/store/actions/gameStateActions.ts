@@ -1,6 +1,5 @@
 import { Dispatch } from 'react';
-import gameStateReducer from '../reducers/gameStateReducer';
-import { CREATE_GAME, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT } from './gameStateTypes';
+import { CHANGE_GAME_STATE, CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT } from './gameStateTypes';
 
 export const createGame = (identifier: string, username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({ type: GET_PENDING });
@@ -62,10 +61,8 @@ export const joinGame = (identifier: string, username: string) => async (dispatc
     }
 }
 
-export const backToHomePage = () => (dispatch: Dispatch<GameStateDispatch>) => {
-    dispatch({type: TO_DEFAULT});
-}
+export const backToHomePage = () => ({type: TO_DEFAULT})
 
-export const startGame = (game: any) => (dispatch: Dispatch<GameStateDispatch>) => {
-    dispatch({type: START_GAME, payload: game})
-}
+export const startGame = (game: any) => ({type: START_GAME, payload: game})
+
+export const changeGameState = (gameState: GameState) => ({type: CHANGE_GAME_STATE, payload: gameState})

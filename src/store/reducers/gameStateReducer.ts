@@ -1,5 +1,5 @@
 import { Color } from "../actions/chesspieceTypes";
-import { CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT } from "../actions/gameStateTypes";
+import { CHANGE_GAME_STATE, CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT } from "../actions/gameStateTypes";
 
 interface DefaultStateI{
     gameState: GameState,
@@ -40,6 +40,8 @@ export default (state: DefaultStateI = defaultState, action: GameStateDispatch) 
             return Object.assign({}, state, {...state, ...action.payload});
         case TO_DEFAULT:
             return Object.assign({}, state, defaultState);
+        case CHANGE_GAME_STATE:
+            return Object.assign({}, state, {...state, gameState: action.payload})
         default:
             return state;
     }

@@ -22,9 +22,6 @@ const Queue = () => {
             dispatch(startGame(game));
         })
 
-        return(() => {
-            socket.emit("leaveRoom", identifier, player!.username);
-        })
     }, [identifier])
 
     const onReady = (e: React.MouseEvent<HTMLButtonElement>) => {

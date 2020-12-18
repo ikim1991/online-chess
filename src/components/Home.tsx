@@ -4,7 +4,6 @@ import Two from '../assets/images/pieces/king.black.png';
 import { generateIdentifier } from './src/generateIdentifier';
 import { useDispatch } from 'react-redux';
 import { createGame, toJoinPage } from '../store/actions/gameStateActions';
-import { socket } from '../ClientSocket';
 import { initializePlayer } from '../store/actions/playerActions';
 
 const Home = () => {

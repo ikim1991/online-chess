@@ -7,6 +7,7 @@ export const SHOW_GAMELIST = 'SHOW_GAMELIST';
 export const JOIN_GAME = 'JOIN_GAME';
 export const START_GAME = 'START_GAME';
 export const TO_DEFAULT = 'TO_DEFAULT';
+export const CHANGE_GAME_STATE = "CHANGE_GAME_STATE";
 
 export type GameState = 'HOME' | 'JOIN' |'QUEUE' | 'READY' | 'PLAY';
 
@@ -79,4 +80,9 @@ interface StartGame{
     }
 }
 
-export type GameStateDispatch = GetPending | GetError | CreateGame | ShowGameList | ToDefault | JoinGame | StartGame;
+interface ChangeGameState{
+    type: typeof CHANGE_GAME_STATE,
+    payload: GameState
+}
+
+export type GameStateDispatch = GetPending | GetError | CreateGame | ShowGameList | ToDefault | JoinGame | StartGame | ChangeGameState;
