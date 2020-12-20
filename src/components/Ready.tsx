@@ -5,6 +5,7 @@ import { changeGameState } from '../store/actions/gameStateActions';
 import { defaultResults, rockPaperScissors } from '../store/actions/RockPaperScissorsActions';
 import { Hand } from '../store/actions/RockPaperScissorsTypes';
 import { RootState } from '../store/store';
+import RPSModal from './RPSModal';
 
 const Ready = () => {
 
@@ -41,7 +42,7 @@ const Ready = () => {
 
     return(
         <div className="ready">``
-            
+            <RPSModal/>
             <h2>Rock! Paper! Scissors!</h2>
             <i className="fa fa-hand-rock-o" onClick={makeSelection}></i>
             <i className="fa fa-hand-paper-o" onClick={makeSelection}></i>

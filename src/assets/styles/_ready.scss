@@ -6,6 +6,54 @@
     padding: 5rem;
     border-radius: 1rem;
 
+    .modal{
+        // display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: $dark;
+        opacity: 0.8;
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            top: 25%;
+            background: $light;
+            margin: auto;
+            width:30%;
+            height: 50%;
+
+            .content{
+                width: 100%;
+                text-align: center;
+                color: $dark;
+                font-weight: bold;
+                line-height: 1rem;
+
+                i{
+                    width: auto;
+                    font-size: 3rem;
+                    background: $dark;
+                    color: $light;
+                    padding: 15px;
+                    margin: 0;
+                }
+    
+                h2{
+                    font-size: 1.5rem;
+                }
+            }
+
+            
+        }
+    }
+
     h2{
         font-size: 3rem;
         margin: 2rem auto;
