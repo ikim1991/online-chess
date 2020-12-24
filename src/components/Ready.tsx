@@ -17,6 +17,8 @@ const Ready = () => {
     useEffect(() => {
         socket.on('results', (game: any, resolved: boolean) => {
 
+            console.log(game.host, game.joiner)
+
             if(resolved){
                 if(player!.username === game.host.username){
                     dispatch(showResults(game.host.result))
@@ -27,7 +29,7 @@ const Ready = () => {
                 setTimeout(() => {
                     dispatch(defaultResults())
                     dispatch(changeGameState(game!.gameState))
-                }, 3000)
+                }, 4000)
                 
             } else{
 
@@ -39,7 +41,7 @@ const Ready = () => {
 
                 setTimeout(() => {
                     dispatch(defaultResults())
-                }, 3000)
+                }, 4000)
             }
         })
 
@@ -62,7 +64,7 @@ const Ready = () => {
 
     return(
         <div className="ready">
-            {hand && <RPSModal/>}
+            {hand && <RPSModal hand={hand} results={results}/>}
             <h2>Rock! Paper! Scissors!</h2>
             <i className="fa fa-hand-rock-o" onClick={makeSelection}></i>
             <i className="fa fa-hand-paper-o" onClick={makeSelection}></i>

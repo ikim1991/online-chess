@@ -4,7 +4,7 @@ export const SHOW_RESULTS = "SHOW_RESULTS";
 export const DEFAULT_RESULTS = "DEFAULT_RESULTS"
 
 export type Hand = "ROCK" | "PAPER" | "SCISSORS";
-export type Results = "WIN" | "LOSE" | "DRAW";
+export type Results = "WIN" | "LOSE" | "DRAW" | "PENDING";
 
 interface RockPaperScissors{
     type: typeof ROCK_PAPER_SCISSORS,

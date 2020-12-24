@@ -2,12 +2,13 @@ import { Results, Hand, RockPaperScissorsDispatch, PENDING_RESULTS, ROCK_PAPER_S
 
 interface DefaultStateI{
     pending: boolean,
-    hand?: Hand,
-    results?: Results
+    results: Results,
+    hand?: Hand
 }
 
 const defaultState: DefaultStateI = {
-    pending: false
+    pending: false,
+    results: "PENDING"
 }
 
 export default (state: DefaultStateI = defaultState, action: RockPaperScissorsDispatch) => {
