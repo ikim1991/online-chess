@@ -1,4 +1,4 @@
-import { Player, PlayerDispatch, INITIALIZE_PLAYER, PLAYER_DEFAULT, CHANGE_PLAYER_STATUS, DETERMINE_COLOR } from "../actions/playerTypes";
+import { Player, PlayerDispatch, INITIALIZE_PLAYER, PLAYER_DEFAULT, CHANGE_PLAYER_STATUS, ASSIGN_COLOR, NEXT_TURN } from "../actions/playerTypes";
 
 interface DefaultStateI{
     player?: Player
@@ -15,8 +15,10 @@ export default (state: DefaultStateI = defaultState, action: PlayerDispatch) => 
                 username: state.player!.username,
                 ready: !state.player!.ready
             }})
-        case DETERMINE_COLOR:
+        case ASSIGN_COLOR:
             return Object.assign({}, state, {player: {...state.player, color: action.payload}})
+        case NEXT_TURN:
+            return Object.assign({}, state, {player: {...state.player, turn: action.payload}})
         case PLAYER_DEFAULT:
             return Object.assign({}, state, defaultState)
         default:

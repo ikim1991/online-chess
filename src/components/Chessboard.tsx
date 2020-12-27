@@ -104,6 +104,7 @@ const Chessboard = () => {
     return(
         <Fragment>
             <OutOfPlay player="WHITE"/>
+            {console.log(player)}
             <div id="chessboard">
                 {(squares && chesspieces && occupied) && (
                     chessboard.rows.map((r, i) => {

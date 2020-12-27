@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { socket } from '../ClientSocket';
 import { changeGameState } from '../store/actions/gameStateActions';
 import { defaultResults, rockPaperScissors, showResults } from '../store/actions/RockPaperScissorsActions';
+import { assignColor, nextTurn } from '../store/actions/playerActions';
 import { Hand } from '../store/actions/RockPaperScissorsTypes';
 import { RootState } from '../store/store';
 import RPSModal from './RPSModal';
@@ -17,13 +18,23 @@ const Ready = () => {
     useEffect(() => {
         socket.on('results', (game: any, resolved: boolean) => {
 
-            console.log(game.host, game.joiner)
-
             if(resolved){
                 if(player!.username === game.host.username){
                     dispatch(showResults(game.host.result))
+                    dispatch(assignColor(game.host.color))
+                    if(game.host.result === 'WIN'){
+                        dispatch(nextTurn(true))
+                    } else{
+                        dispatch(nextTurn(false))
+                    }
                 } else{
                     dispatch(showResults(game.joiner.result))
+                    dispatch(assignColor(game.joiner.color))
+                    if(game.joiner.result === 'WIN'){
+                        dispatch(nextTurn(true))
+                    } else{
+                        dispatch(nextTurn(false))
+                    }
                 }
                 
                 setTimeout(() => {

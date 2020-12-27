@@ -7,7 +7,6 @@ interface RPSModalProps{
 }
 
 const RPSModal: React.FunctionComponent<RPSModalProps> = ({hand, results}) => {
-    console.log(hand, results)
     return(
         (results === 'PENDING') ? (
             <div className="modal">

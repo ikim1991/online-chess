@@ -2,8 +2,8 @@ import { Chessboard, ChessboardDispatch, INITIALIZE_CHESSBOARD, RENDER_POSITIONS
 
 interface DefaultStateI{
     chessboard: Chessboard;
-    squares?: Square[],
-    occupied?: {[key:string]: string}
+    squares?: Square[];
+    occupied?: {[key:string]: string};
 }
 
 const defaultState: DefaultStateI = {
