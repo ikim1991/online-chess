@@ -1,12 +1,12 @@
 #chessboard{
     display: grid;
-    grid-template-rows: repeat(8, 100px);
+    grid-template-rows: repeat(8, 50px);
     margin: auto;
     border: solid 15px #87421f;
 
     .row{
         display: grid;
-        grid-template-columns: repeat(8, 100px);
+        grid-template-columns: repeat(8, 50px);
     }
 
     .row:nth-child(even){

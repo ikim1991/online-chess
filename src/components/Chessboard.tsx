@@ -40,6 +40,7 @@ const Chessboard = () => {
             let movedPiece = chesspieces!.find(piece => piece._id === data.id)!;
             
             console.log(movedPiece)
+            // SOCKET EMIT
 
             if(!movedPiece.hasBeenMoved){  
                 dispatch(updateChessPiece(Object.assign({}, movedPiece, {...movedPiece, hasBeenMoved: true})))
@@ -104,7 +105,6 @@ const Chessboard = () => {
     return(
         <Fragment>
             <OutOfPlay player="WHITE"/>
-            {console.log(player)}
             <div id="chessboard">
                 {(squares && chesspieces && occupied) && (
                     chessboard.rows.map((r, i) => {
@@ -135,7 +135,6 @@ const Chessboard = () => {
             </div>
             <OutOfPlay player="BLACK"/>
         </Fragment>
-        
     )
 }
 
