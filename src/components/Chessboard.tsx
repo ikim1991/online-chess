@@ -44,7 +44,7 @@ const Chessboard = () => {
 
             if(e.currentTarget.hasChildNodes()){
                 let captured = chesspieces!.find(piece => piece.position === sq.position)!;
-                socket.emit('capturePiece', sessionStorage.identifier, movedPiece, captured)
+                socket.emit('capturePiece', sessionStorage.identifier, movedPiece.id, id, captured.id, captured.coord)
 
             } else{
                 socket.emit('movePiece', sessionStorage.identifier, movedPiece.id, id, mapPosition(id))
