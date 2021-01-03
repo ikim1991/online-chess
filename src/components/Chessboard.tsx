@@ -4,10 +4,12 @@ import { RootState } from '../store/store';
 import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
 import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
-import { initializeChesspieces, moveChessPiece, updateChessPiece } from '../store/actions/chesspieceAction';
+import { initializeChesspieces } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
-import { legalMove } from './src/chessLogic';
+import { legalMove, mapPosition } from './src/chessLogic';
 import OutOfPlay from './OutOfPlay';
+import { nextTurn } from '../store/actions/playerActions';
+import { socket } from '../ClientSocket';
 
 const Chessboard = () => {
 
@@ -33,24 +35,20 @@ const Chessboard = () => {
         const data: DataJson = JSON.parse(e.dataTransfer.getData("data"))
 
         let sq = squares!.filter((square, i) => square.position === id)[0]
-        let p = chesspieces!.filter((piece, i) => piece._id === data.id)[0]
+        let p = chesspieces!.filter((piece, i) => piece.id === data.id)[0]
         let occ = Object.entries(occupied!)
 
         if(legalMove(p,sq, occ)){
-            let movedPiece = chesspieces!.find(piece => piece._id === data.id)!;
-            
-            console.log(movedPiece)
-            // SOCKET EMIT
+            let movedPiece = chesspieces!.find(piece => piece.id === data.id)!;
+            dispatch(nextTurn(false));
 
-            if(!movedPiece.hasBeenMoved){  
-                dispatch(updateChessPiece(Object.assign({}, movedPiece, {...movedPiece, hasBeenMoved: true})))
-            }
             if(e.currentTarget.hasChildNodes()){
                 let captured = chesspieces!.find(piece => piece.position === sq.position)!;
-                dispatch(updateChessPiece(Object.assign({}, captured, {...captured, inPlay: false, position: "a0"})))
-            }
+                socket.emit('capturePiece', sessionStorage.identifier, movedPiece, captured)
 
-            dispatch(moveChessPiece(data.id, id))
+            } else{
+                socket.emit('movePiece', sessionStorage.identifier, movedPiece.id, id, mapPosition(id))
+            }
         }
     }
 
@@ -78,7 +76,7 @@ const Chessboard = () => {
             initializer.forEach((piece, i) => {
                 piece._ids.forEach((id, j) => {
                     chesspieces.push({
-                        _id: id,
+                        id: id,
                         rank: piece.rank,
                         color: piece.color,
                         position: piece.position[j],
@@ -96,11 +94,25 @@ const Chessboard = () => {
         if(chesspieces){
             let positions: {[key:string]: string} = {}
             chesspieces.forEach((piece) => {
-                positions[piece._id] = piece.position
+                positions[piece.id] = piece.position
             })
             dispatch(renderPositions(positions))
         }
     }, [chesspieces])
+
+    useEffect(() => {
+        socket.on('renderBoard', async (newPositions: any, newChesspieces: any, players: any) => {
+            
+            dispatch(renderPositions(newPositions))
+            dispatch(initializeChesspieces(newChesspieces))
+            
+            if(players[0].username === player!.username){
+                dispatch(nextTurn(players[0].turn))
+            } else{
+                dispatch(nextTurn(players[1].turn))
+            }
+        })
+    }, [])
 
     return(
         <Fragment>
@@ -120,7 +132,7 @@ const Chessboard = () => {
                             if(chesspieces.find(piece => piece.position === position)?.inPlay){
                                 return (
                                     <div id={position} className="square" key={value} onDragOver={allowDrop} onDrop={drop}>
-                                        <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]}/>
+                                        <ChessPiece id={ids[index]} position={position} coord={[Object.values(col)[0], r]} player={player!}/>
                                     </div>
                                 )
                             } else{
