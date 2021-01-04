@@ -13,9 +13,9 @@ const OutOfPlay = ({player}: OutOfPlayProps) => {
 
     return(
         <div className={`outofplay-${player}`}>
-            {(chesspieces) && (chesspieces.map((piece, i) => {
-                if(!piece.inPlay && (piece.color === player)){
-                    return <img id={piece._id} className='piece' src={getChesspiece(piece._id)} alt='chesspiece' key={i}/>
+            {(chesspieces) && (chesspieces.filter(piece => !piece.inPlay).map((piece, i) => {
+                if((piece.color === player)){
+                    return <img id={piece.id} className='piece' src={getChesspiece(piece.id)} alt='chesspiece' key={i}/>
                 }
             }))}
         </div>

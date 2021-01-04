@@ -92,18 +92,8 @@ const Chessboard = () => {
     }, [squares])
 
     useEffect(() => {
-        if(chesspieces){
-            let positions: {[key:string]: string} = {}
-            chesspieces.forEach((piece) => {
-                positions[piece.id] = piece.position
-            })
-            dispatch(renderPositions(positions))
-        }
-    }, [chesspieces])
-
-    useEffect(() => {
         socket.on('renderBoard', async (newPositions: any, newChesspieces: any, players: any) => {
-            
+
             dispatch(renderPositions(newPositions))
             dispatch(initializeChesspieces(newChesspieces))
             
