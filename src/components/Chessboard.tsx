@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
@@ -106,7 +106,12 @@ const Chessboard = () => {
     }, [])
 
     return(
-        <Fragment>
+        <div className="board">
+            {(player!.turn) ? ( 
+                <div className="header">{`It's Your Turn (${player!.color} to Move...)`}</div>
+            ) : (
+                <div className="header">{`Waiting on Your Opponent (${((player!.color === 'WHITE') ? ('BLACK') : ('WHITE'))} to Move...)`}</div>
+            )}
             <OutOfPlay player="WHITE"/>
             <div id="chessboard">
                 {(squares && chesspieces && occupied) && (
@@ -166,7 +171,7 @@ const Chessboard = () => {
                     )}
             </div>
             <OutOfPlay player="BLACK"/>
-        </Fragment>
+        </div>
     )
 }
 
