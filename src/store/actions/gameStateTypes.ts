@@ -8,6 +8,7 @@ export const JOIN_GAME = 'JOIN_GAME';
 export const START_GAME = 'START_GAME';
 export const TO_DEFAULT = 'TO_DEFAULT';
 export const CHANGE_GAME_STATE = "CHANGE_GAME_STATE";
+export const UPDATE_ON_EXIT = "UPDATE_ON_EXIT";
 
 export type GameState = 'HOME' | 'JOIN' |'QUEUE' | 'READY' | 'PLAY';
 
@@ -85,4 +86,22 @@ interface ChangeGameState{
     payload: GameState
 }
 
-export type GameStateDispatch = GetPending | GetError | CreateGame | ShowGameList | ToDefault | JoinGame | StartGame | ChangeGameState;
+interface UpdateOnExit{
+    type: typeof UPDATE_ON_EXIT,
+    payload: {
+        identifier: string,
+        host?: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        joiner?: {
+            username: string,
+            ready: boolean,
+            color?: Color
+        },
+        gameState: GameState
+    }
+}
+
+export type GameStateDispatch = GetPending | GetError | CreateGame | ShowGameList | ToDefault | JoinGame | StartGame | ChangeGameState | UpdateOnExit;

@@ -1,5 +1,7 @@
 export const INITIALIZE_CHESSBOARD = "INITIALIZE_CHESSBOARD";
-export const RENDER_POSITIONS = "RENDER_POSITIONS"
+export const RENDER_POSITIONS = "RENDER_POSITIONS";
+export const RENDER_CHECKMATE = "RENDER_CHECKMATE";
+export const DEFAULT_CHESSBOARD = "DEFAULT_CHESSBOARD";
 
 export type Square = {
     position: string;
@@ -25,4 +27,12 @@ interface InitializeChessboard{
     payload: Square[]
 }
 
-export type ChessboardDispatch = RenderPositions | InitializeChessboard
+interface RenderCheckmate{
+    type: typeof RENDER_CHECKMATE;
+}
+
+interface DefaultChessboard{
+    type: typeof DEFAULT_CHESSBOARD;
+}
+
+export type ChessboardDispatch = RenderPositions | InitializeChessboard | RenderCheckmate | DefaultChessboard;

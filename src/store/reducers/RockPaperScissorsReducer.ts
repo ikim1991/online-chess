@@ -20,8 +20,8 @@ export default (state: DefaultStateI = defaultState, action: RockPaperScissorsDi
         case SHOW_RESULTS:
             return Object.assign({}, state, {...state, results: action.payload, pending: false});
         case DEFAULT_RESULTS:
-            return defaultState;
+            return state;
         default:
-            return state
+            return state;
     }
 }

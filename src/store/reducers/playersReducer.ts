@@ -20,7 +20,7 @@ export default (state: DefaultStateI = defaultState, action: PlayerDispatch) => 
         case NEXT_TURN:
             return Object.assign({}, state, {player: {...state.player, turn: action.payload}})
         case PLAYER_DEFAULT:
-            return Object.assign({}, state, defaultState)
+            return Object.assign({}, state, defaultState);
         default:
             return state;
     }

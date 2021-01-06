@@ -70,7 +70,6 @@ const Ready = () => {
         
         dispatch(rockPaperScissors(selection))
         socket.emit('rock-paper-scissors', identifier, player!.username, selection)
-
     }
 
     return(

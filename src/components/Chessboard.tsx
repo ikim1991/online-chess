@@ -10,11 +10,12 @@ import { legalMove, mapPosition } from './src/chessLogic';
 import OutOfPlay from './OutOfPlay';
 import { nextTurn } from '../store/actions/playerActions';
 import { socket } from '../ClientSocket';
+import ResetModal from './ResetModal';
 
 const Chessboard = () => {
 
     const dispatch = useDispatch();
-    const { chessboard, squares, occupied } = useSelector((state: RootState) => state.chessboard)
+    const { chessboard, squares, occupied, checkmate } = useSelector((state: RootState) => state.chessboard)
     const { initializer, chesspieces } = useSelector((state: RootState) => state.chesspiece)
     const { player } = useSelector((state: RootState) => state.player);
     const rows = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -107,6 +108,7 @@ const Chessboard = () => {
 
     return(
         <div className="board">
+            {checkmate && (<ResetModal/>)}
             {(player!.turn) ? ( 
                 <div className="header">{`It's Your Turn (${player!.color} to Move...)`}</div>
             ) : (

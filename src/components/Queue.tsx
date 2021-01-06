@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { socket } from '../ClientSocket';
-import { backToHomePage, startGame } from '../store/actions/gameStateActions';
-import { changePlayerStatus, toPlayerDefault } from '../store/actions/playerActions';
+import { backToHomePage, startGame, updateOnExit } from '../store/actions/gameStateActions';
+import { changePlayerStatus, initializePlayer, toPlayerDefault } from '../store/actions/playerActions';
 import { RootState } from '../store/store';
 
 const Queue = () => {
@@ -20,6 +20,23 @@ const Queue = () => {
 
         socket.on("updateReady", (game: any, username: string) => {
             dispatch(startGame(game));
+        })
+
+        socket.on("onExitRoomUpdate", (game: any) => {
+
+            dispatch(updateOnExit(game))
+            
+            if(game.host.username === player!.username){
+                dispatch(initializePlayer(game.host))
+            } else{
+                dispatch(initializePlayer(game.joiner))
+            }
+            
+        })
+
+        window.addEventListener('beforeunload', async (e: Event) => {
+            e.preventDefault();
+            socket.emit('exitRoom', identifier, player!.username)
         })
 
     }, [identifier])
@@ -40,6 +57,9 @@ const Queue = () => {
     }
 
     const backToHome = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+        socket.emit('exitRoom', identifier, player!.username)
+
         dispatch(backToHomePage());
         dispatch(toPlayerDefault());
         sessionStorage.removeItem('identifier');

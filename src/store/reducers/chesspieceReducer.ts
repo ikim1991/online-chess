@@ -1,5 +1,5 @@
 import { mapPosition } from "../../components/src/chessLogic"
-import { Chesspiece, Color, ChesspieceDispatch, INITIALIZE_CHESSPIECES, Rank } from "../actions/chesspieceTypes"
+import { Chesspiece, Color, ChesspieceDispatch, INITIALIZE_CHESSPIECES, Rank, DEFAULT_CHESSPIECES } from "../actions/chesspieceTypes"
 
 export type Initializer = ({
     color: Color;
@@ -48,7 +48,9 @@ export default (state: DefaultStateI = defaultState, action: ChesspieceDispatch)
     switch(action.type){
         case INITIALIZE_CHESSPIECES:
             return Object.assign({}, state, {...state, chesspieces: action.payload})
+        case DEFAULT_CHESSPIECES:
+            return Object.assign({}, state, defaultState);
         default:
-            return state
+            return state;
     }
 }
