@@ -34,10 +34,12 @@ const Queue = () => {
             
         })
 
-        window.addEventListener('beforeunload', async (e: Event) => {
+        const emitRoomExit = async (e: Event) => {
             e.preventDefault();
             socket.emit('exitRoom', identifier, player!.username)
-        })
+        }
+
+        window.addEventListener('beforeunload', emitRoomExit)
 
     }, [identifier])
 

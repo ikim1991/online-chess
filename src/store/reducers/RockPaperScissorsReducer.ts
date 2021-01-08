@@ -8,7 +8,8 @@ interface DefaultStateI{
 
 const defaultState: DefaultStateI = {
     pending: false,
-    results: "PENDING"
+    results: "PENDING",
+    hand: ""
 }
 
 export default (state: DefaultStateI = defaultState, action: RockPaperScissorsDispatch) => {
@@ -16,11 +17,11 @@ export default (state: DefaultStateI = defaultState, action: RockPaperScissorsDi
         case PENDING_RESULTS:
             return Object.assign({}, state, {...state, pending: true});
         case ROCK_PAPER_SCISSORS:
-            return Object.assign({}, state, {...state, hand: action.payload});
+            return Object.assign({}, state, {...state, hand: action.payload, pending: true});
         case SHOW_RESULTS:
-            return Object.assign({}, state, {...state, results: action.payload, pending: false});
+            return Object.assign({}, state, {...state, results: action.payload, pending: true});
         case DEFAULT_RESULTS:
-            return state;
+            return Object.assign({}, state, defaultState);
         default:
             return state;
     }

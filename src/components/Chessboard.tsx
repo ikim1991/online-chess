@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { initializeChessboard, renderPositions } from '../store/actions/chessboardActions';
+import { initializeChessboard, renderPositions, renderCheckmate } from '../store/actions/chessboardActions';
 import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
 import { initializeChesspieces } from '../store/actions/chesspieceAction';
@@ -104,6 +104,11 @@ const Chessboard = () => {
                 dispatch(nextTurn(players[1].turn))
             }
         })
+
+        socket.on('endGame', async (checkmate: boolean) => {
+            dispatch(renderCheckmate())          
+        })
+
     }, [])
 
     return(

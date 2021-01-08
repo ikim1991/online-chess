@@ -12,10 +12,12 @@ const Ready = () => {
 
     const { identifier } = useSelector((state: RootState) => state.game)
     const { player } = useSelector((state: RootState) => state.player);
-    const { hand, results } = useSelector((state: RootState) => state.rockPaperScissors)
+    const { hand, results, pending } = useSelector((state: RootState) => state.rockPaperScissors)
+    const rpsState =  useSelector((state: RootState) => state.rockPaperScissors)
     const dispatch = useDispatch()
 
     useEffect(() => {
+
         socket.on('results', (game: any, resolved: boolean) => {
 
             if(resolved){
@@ -39,16 +41,11 @@ const Ready = () => {
                 
                 setTimeout(() => {
                     dispatch(defaultResults())
-                    dispatch(changeGameState(game!.gameState))
+                    dispatch(changeGameState(game.gameState))
                 }, 4000)
                 
             } else{
-
-                if(player!.username === game.host.username){
-                    dispatch(showResults(game.host.result))
-                } else{
-                    dispatch(showResults(game.joiner.result))
-                }
+                dispatch(showResults('DRAW'))
 
                 setTimeout(() => {
                     dispatch(defaultResults())
@@ -67,14 +64,16 @@ const Ready = () => {
         } else{
             selection = 'SCISSORS'
         }
-        
+
         dispatch(rockPaperScissors(selection))
         socket.emit('rock-paper-scissors', identifier, player!.username, selection)
+
     }
 
     return(
         <div className="ready">
-            {hand && <RPSModal hand={hand} results={results}/>}
+            {console.log(rpsState, "RENDER")}
+            {(hand) && (<RPSModal hand={hand} results={results}/>)}
             <h2>Rock! Paper! Scissors!</h2>
             <i className="fa fa-hand-rock-o" onClick={makeSelection}></i>
             <i className="fa fa-hand-paper-o" onClick={makeSelection}></i>
