@@ -41,6 +41,10 @@ const Queue = () => {
 
         window.addEventListener('beforeunload', emitRoomExit)
 
+        return () => {
+            window.removeEventListener('beforeunload', emitRoomExit)
+        }
+
     }, [identifier])
 
     const onReady = (e: React.MouseEvent<HTMLButtonElement>) => {

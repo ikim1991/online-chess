@@ -23,4 +23,4 @@ interface DefaultChesspieces{
     type: typeof DEFAULT_CHESSPIECES;
 }
 
-export type ChesspieceDispatch = InitializeChesspieces | DefaultChesspieces;
+export type ChesspieceDispatch = InitializeChesspieces;

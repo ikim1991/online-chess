@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { initializeChessboard, renderPositions, renderCheckmate } from '../store/actions/chessboardActions';
+import { initializeChessboard, renderPositions, renderCheckmate, disconnect } from '../store/actions/chessboardActions';
 import { Square } from '../store/actions/chessboardTypes';
 import { Chesspiece } from '../store/actions/chesspieceTypes';
 import { initializeChesspieces } from '../store/actions/chesspieceAction';
 import ChessPiece from './ChessPiece';
 import { legalMove, mapPosition } from './src/chessLogic';
 import OutOfPlay from './OutOfPlay';
-import { nextTurn } from '../store/actions/playerActions';
+import { initializePlayer, nextTurn } from '../store/actions/playerActions';
 import { socket } from '../ClientSocket';
 import ResetModal from './ResetModal';
+import { backToQueue, startGame } from '../store/actions/gameStateActions';
+import DisconnectModal from './DisconnectModal';
+import { Player } from '../store/actions/playerTypes';
 
 const Chessboard = () => {
 
     const dispatch = useDispatch();
-    const { chessboard, squares, occupied, checkmate } = useSelector((state: RootState) => state.chessboard)
+    const { chessboard, squares, occupied, checkmate, disconnected } = useSelector((state: RootState) => state.chessboard)
     const { initializer, chesspieces } = useSelector((state: RootState) => state.chesspiece)
     const { player } = useSelector((state: RootState) => state.player);
     const rows = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -105,15 +108,65 @@ const Chessboard = () => {
             }
         })
 
-        socket.on('endGame', async (checkmate: boolean) => {
-            dispatch(renderCheckmate())          
+        let timer: NodeJS.Timeout;
+
+        socket.on('endGame', async (winner: Player) => {
+            
+            if(winner.username === player!.username){
+                dispatch(nextTurn(true))
+            }
+
+            dispatch(renderCheckmate(true))
+            
+            timer = setTimeout(() => {
+                socket.emit("playAgain", sessionStorage.identifier)
+            }, 4000)
         })
+
+        socket.on('backToQueue', async (game: any) => {
+            dispatch(disconnect(true))
+
+            setTimeout(() => {
+                dispatch(backToQueue(game))
+            }, 4000)
+        })
+
+        socket.on('clearTimer', async (game: any) => {
+            clearTimeout(timer)
+            dispatch(renderCheckmate(false))
+        })
+
+        socket.on('changeUp', (chesspieces: Chesspiece[], players: any) => {
+
+            if(player!.username === players[0].username){
+                dispatch(initializePlayer(players[0]))
+                dispatch(nextTurn(players[0].turn))
+            } else{
+                dispatch(initializePlayer(players[1]))
+                dispatch(nextTurn(players[1].turn))
+            }
+
+            dispatch(initializeChesspieces(chesspieces))
+            dispatch(renderCheckmate(false))
+        })
+
+        const emitExitGame = async (e: Event) => {
+            e.preventDefault();
+            socket.emit('exitGame', sessionStorage.identifier, player!.username)
+        }
+
+        window.addEventListener('beforeunload', emitExitGame)
+
+        return () => {
+            window.removeEventListener('beforeunload', emitExitGame)
+        }
 
     }, [])
 
     return(
         <div className="board">
-            {checkmate && (<ResetModal/>)}
+            {disconnected && <DisconnectModal/>}
+            {(checkmate) && (<ResetModal turn={player!.turn!} color={player!.color!}/>)}
             {(player!.turn) ? ( 
                 <div className="header">{`It's Your Turn (${player!.color} to Move...)`}</div>
             ) : (

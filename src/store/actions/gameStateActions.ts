@@ -1,5 +1,7 @@
 import { Dispatch } from 'react';
+import { ChessboardDispatch, DISCONNECTED } from './chessboardTypes';
 import { CHANGE_GAME_STATE, CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT, UPDATE_ON_EXIT } from './gameStateTypes';
+import { DEFAULT_RESULTS, RockPaperScissorsDispatch } from './RockPaperScissorsTypes';
 
 export const createGame = (identifier: string, username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({ type: GET_PENDING });
@@ -68,3 +70,11 @@ export const startGame = (game: any) => ({type: START_GAME, payload: game})
 export const changeGameState = (gameState: GameState) => ({type: CHANGE_GAME_STATE, payload: gameState})
 
 export const updateOnExit = (game: any) => ({type: UPDATE_ON_EXIT, payload: game})
+
+export const backToQueue = (game: any) => (dispatch: Dispatch<GameStateDispatch | ChessboardDispatch>) => {
+
+    setTimeout(() => {
+        dispatch({type: DISCONNECTED, payload: false})
+        dispatch({type: START_GAME, payload: game})
+    }, 4000)
+}

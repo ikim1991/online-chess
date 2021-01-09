@@ -48,8 +48,6 @@ export default (state: DefaultStateI = defaultState, action: ChesspieceDispatch)
     switch(action.type){
         case INITIALIZE_CHESSPIECES:
             return Object.assign({}, state, {...state, chesspieces: action.payload})
-        case DEFAULT_CHESSPIECES:
-            return Object.assign({}, state, defaultState);
         default:
             return state;
     }
