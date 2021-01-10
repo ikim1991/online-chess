@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { ChessboardDispatch, DISCONNECTED } from './chessboardTypes';
 import { CHANGE_GAME_STATE, CREATE_GAME, GameState, GameStateDispatch, GET_ERROR, GET_PENDING, JOIN_GAME, SHOW_GAMELIST, START_GAME, TO_DEFAULT, UPDATE_ON_EXIT } from './gameStateTypes';
-import { DEFAULT_RESULTS, RockPaperScissorsDispatch } from './RockPaperScissorsTypes';
+import { PlayerDispatch, PLAYER_UNREADY } from './playerTypes';
 
 export const createGame = (identifier: string, username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({ type: GET_PENDING });
@@ -60,6 +60,7 @@ export const joinGame = (identifier: string, username: string) => async (dispatc
         sessionStorage.setItem('identifier', data.identifier);
     } else{
         dispatch({type: GET_ERROR, payload: data.error})
+        alert("Username Already Exists in This Room...")
     }
 }
 
@@ -71,10 +72,12 @@ export const changeGameState = (gameState: GameState) => ({type: CHANGE_GAME_STA
 
 export const updateOnExit = (game: any) => ({type: UPDATE_ON_EXIT, payload: game})
 
-export const backToQueue = (game: any) => (dispatch: Dispatch<GameStateDispatch | ChessboardDispatch>) => {
+export const backToQueue = (game: any) => (dispatch: Dispatch<GameStateDispatch | ChessboardDispatch | PlayerDispatch>) => {
+
+    dispatch({type: PLAYER_UNREADY})
 
     setTimeout(() => {
         dispatch({type: DISCONNECTED, payload: false})
         dispatch({type: START_GAME, payload: game})
-    }, 4000)
+    }, 2000)
 }

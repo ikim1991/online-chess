@@ -5,6 +5,7 @@ export const CHANGE_PLAYER_STATUS = "CHANGE_PLAYER_STATUS";
 export const PLAYER_DEFAULT = "PLAYER_DEFAULT";
 export const ASSIGN_COLOR = "ASSIGN_COLOR";
 export const NEXT_TURN = "NEXT_TURN";
+export const PLAYER_UNREADY = "PLAYER_UNREADY";
 
 export type Player = {
     username: string;
@@ -37,4 +38,8 @@ interface NextTurn{
     payload: boolean;
 }
 
-export type PlayerDispatch = InitializePlayer | ChangePlayerStatus | PlayerDefault | AssignColor | NextTurn;
+interface PlayerUnready{
+    type: typeof PLAYER_UNREADY;
+}
+
+export type PlayerDispatch = InitializePlayer | ChangePlayerStatus | PlayerDefault | AssignColor | NextTurn | PlayerUnready;

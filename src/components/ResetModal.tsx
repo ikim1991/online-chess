@@ -13,18 +13,18 @@ const ResetModal: React.FunctionComponent<ResetModalProps> = ({turn, color}) => 
             <div className="reset-container">
             {
                 (turn) ? (
-                    <div>
+                    <div className="reset-content">
                         <h1>You Win!</h1>
-                        <h2>Resetting the Board...</h2>
-                        <h2>You are now Playing as {(color === 'WHITE') ? 'BLACK' : 'WHITE'}</h2>
-                        <h2>Game will Start Momentarily...</h2>
+                        <h1>Resetting the Board...</h1>
+                        <h1>You are now Playing as {(color === 'WHITE') ? 'BLACK' : 'WHITE'}</h1>
+                        <h1>Game will Start Momentarily...</h1>
                     </div>
                 ) : (
-                    <div>
+                    <div className="reset-content">
                         <h1>You Lose!</h1>
-                        <h2>Resetting the Board...</h2>
-                        <h2>You are now Playing as {(color === 'WHITE') ? 'BLACK' : 'WHITE'}</h2>
-                        <h2>Game will Start Momentarily...</h2>
+                        <h1>Resetting the Board...</h1>
+                        <h1>You are now Playing as {(color === 'WHITE') ? 'BLACK' : 'WHITE'}</h1>
+                        <h1>Game will Start Momentarily...</h1>
                     </div>
                 )
             }
