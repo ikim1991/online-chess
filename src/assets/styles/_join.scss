@@ -2,10 +2,12 @@
     display: inline-block;
     font-family: $header-font;
     color: $light;
-    max-height: 50%;
+    width: 30%;
+    min-height: 50%;
+    max-height: 75%;
     border: 2px solid $light;
     margin: auto;
-    padding: 5rem;
+    padding: 25px;
     border-radius: 1rem;
     overflow-y: scroll;
 

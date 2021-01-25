@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import Chessboard from './components/Chessboard';
 import Queue from './components/Queue';
@@ -10,7 +10,6 @@ import './assets/styles/App.scss';
 
 const App = () => {
 
-    const dispatch = useDispatch();
     const { gameState, identifier } = useSelector((state: RootState) => state.game);
 
     return(

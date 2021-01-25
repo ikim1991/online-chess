@@ -1,4 +1,3 @@
-import { mapPosition } from "../../components/src/chessLogic"
 import { Chesspiece, Color, ChesspieceDispatch, INITIALIZE_CHESSPIECES, Rank, DEFAULT_CHESSPIECES } from "../actions/chesspieceTypes"
 
 export type Initializer = ({

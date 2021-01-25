@@ -5,7 +5,7 @@ import { PlayerDispatch, PLAYER_UNREADY } from './playerTypes';
 
 export const createGame = (identifier: string, username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({ type: GET_PENDING });
-    const response: any = await fetch('http://localhost:3001/create', {
+    const response: any = await fetch(`${process.env.SERVER_URL}create`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ identifier, username })
@@ -27,7 +27,7 @@ export const createGame = (identifier: string, username: string) => async (dispa
 export const toJoinPage = (username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({type: GET_PENDING})
 
-    const response: any = await fetch('http://localhost:3001/join', {
+    const response: any = await fetch(`${process.env.SERVER_URL}join`, {
         method: 'get',
         headers: { 'Content-Type': 'application/json'}
     })
@@ -43,7 +43,7 @@ export const toJoinPage = (username: string) => async (dispatch: Dispatch<GameSt
 
 export const joinGame = (identifier: string, username: string) => async (dispatch: Dispatch<GameStateDispatch>) => {
     dispatch({type: GET_PENDING });
-    const response: any = await fetch('http://localhost:3001/join', {
+    const response: any = await fetch(`${process.env.SERVER_URL}join`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ identifier, username })

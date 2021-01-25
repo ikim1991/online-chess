@@ -1,7 +1,63 @@
-.piece{
-    width: 50px;
-    height: 50px;
+@media only screen and (max-width: 1023px){
+    .piece{
+        width: 25px;
+        height: 25px;
+    }
+
+    #chessboard{
+        grid-template-rows: repeat(8, 25px);
+
+        .row{
+            grid-template-columns: repeat(8, 25px);
+        }
+    }
 }
+
+@media screen and (min-width: 1024px) and (max-width: 1366px){
+    .piece{
+        width: 50px;
+        height: 50px;
+    }
+
+    #chessboard{
+        grid-template-rows: repeat(8, 50px);
+
+        .row{
+            grid-template-columns: repeat(8, 50px);
+        }
+    }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1919px){
+    .piece{
+        width: 75px;
+        height: 75px;
+    }
+
+    #chessboard{
+        grid-template-rows: repeat(8, 75px);
+
+        .row{
+            grid-template-columns: repeat(8, 75px);
+        }
+    }
+}
+
+@media screen and (min-width: 1920px){
+    .piece{
+        width: 100px;
+        height: 100px;
+    }
+
+    #chessboard{
+        grid-template-rows: repeat(8, 100px);
+
+        .row{
+            grid-template-columns: repeat(8, 100px);
+        }
+    }
+}
+
 
 .piece:hover{
     background-color: $light;

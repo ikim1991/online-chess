@@ -11,7 +11,7 @@ import OutOfPlay from './OutOfPlay';
 import { initializePlayer, nextTurn } from '../store/actions/playerActions';
 import { socket } from '../ClientSocket';
 import ResetModal from './ResetModal';
-import { backToQueue, startGame } from '../store/actions/gameStateActions';
+import { backToQueue } from '../store/actions/gameStateActions';
 import DisconnectModal from './DisconnectModal';
 import { Player } from '../store/actions/playerTypes';
 
