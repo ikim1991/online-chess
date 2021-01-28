@@ -34,6 +34,18 @@ body{
         font-size: 1.25em;
         font-family: $body-font;
     }
+
+    .loader {
+        margin: auto;
+        text-align: center;
+        font-family: $body-font;
+        color: $light;
+        font-weight: bold;
+      }
+      .loader-text{
+        margin-top: 1em;
+        font-size: 2em;
+      }
 }
 
 .board{

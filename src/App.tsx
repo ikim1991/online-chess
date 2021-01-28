@@ -7,15 +7,16 @@ import Home from './components/Home';
 import Ready from './components/Ready';
 import Join from './components/Join';
 import './assets/styles/App.scss';
+import Loading from './components/src/Loading';
 
 const App = () => {
 
-    const { gameState, identifier } = useSelector((state: RootState) => state.game);
+    const { gameState, identifier, pending } = useSelector((state: RootState) => state.game);
 
     return(
         <div id="main" className='App'>
             {(gameState === 'HOME') && (
-                <Home/>
+                (!pending) ? <Home/> : <Loading/>
             )}
             {(gameState === 'JOIN') && (
                 <Join/>
